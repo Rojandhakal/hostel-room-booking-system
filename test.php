@@ -1,7 +1,6 @@
 <?php
-echo "Checking if ajax folder exists: " . (is_dir(__DIR__ . '/ajax') ? 'YES' : 'NO') . "<br>";
-echo "Checking if check_availability.php exists: " . (file_exists(__DIR__ . '/ajax/check_availability.php') ? 'YES' : 'NO') . "<br>";
-
-// Test the direct URL
-echo "Direct URL: http://localhost/FullStack/hostel-booking/ajax/check_availability.php<br>";
+// ajax/test_ajax_endpoint.php
+echo "AJAX endpoint test page<br>";
+echo "If you can see this, the ajax folder is accessible.<br>";
+echo "Try posting data to check_availability.php";
 ?>

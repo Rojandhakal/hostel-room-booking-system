@@ -120,11 +120,11 @@ try {
                 <i class="bi bi-list-check display-1 text-warning"></i>
                 <h4>View Bookings</h4>
                 <p>See all bookings</p>
-                <a href="/FullStack/hostel-booking/bookings/manage.php" class="btn btn-warning">View</a>
+                <!-- Change this link -->
+                <a href="/FullStack/hostel-booking/controllers/rooms/bookings/manage.php" class="btn btn-warning">View</a>
             </div>
         </div>
     </div>
-</div>
 
 <!-- Quick Search -->
 <div class="card mt-5">
