@@ -127,12 +127,10 @@ a.action:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     text-align: center;
 }
-
 .auth-container h2 {
     margin-bottom: 20px;
     color: #1e293b;
 }
-
 .auth-container input,
 .auth-container select,
 .auth-container button {
@@ -140,23 +138,62 @@ a.action:hover {
     max-width: 100%;
     margin: 10px 0;
 }
-
 .auth-container button {
     padding: 12px;
     font-size: 16px;
 }
-
 .auth-container p {
     margin-top: 15px;
     font-size: 14px;
     color: #555;
 }
-
 .auth-container p a {
     color: #0066cc;
     text-decoration: none;
 }
-
 .auth-container p a:hover {
     text-decoration: underline;
+}
+
+/* ===== Responsive CSS ===== */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px 20px;
+    }
+    .dashboard {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .card {
+        padding: 10px;
+    }
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+    table, th, td {
+        font-size: 14px;
+        display: block;
+        width: 100%;
+    }
+    table {
+        overflow-x: auto;
+        display: block;
+    }
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+    .hero {
+        font-size: 20px;
+        padding: 20px;
+    }
+    input, select, button {
+        max-width: 100%;
+    }
+    .auth-container {
+        margin: 50px 15px;
+        padding: 20px;
+    }
 }

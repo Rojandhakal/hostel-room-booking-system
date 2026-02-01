@@ -10,6 +10,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role']!=='admin'){
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../assets/style.css">
 <title>Admin Panel</title>
 </head>
