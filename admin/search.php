@@ -4,10 +4,8 @@ include '../includes/admin_header.php';
 
 $results = [];
 
-// Fetch all rooms by default
 $results = $pdo->query("SELECT * FROM rooms ORDER BY room_number")->fetchAll();
 
-// If search is submitted
 if (isset($_GET['search'])) {
     $type     = $_GET['type'] ?? '';
     $capacity = $_GET['capacity'] ?? 0;
@@ -21,8 +19,6 @@ if (isset($_GET['search'])) {
     ]);
     $results = $stmt->fetchAll();
 }
-
-// Function to determine occupancy
 function getRoomStatus($pdo, $room_number) {
     $today = date('Y-m-d');
     $stmt = $pdo->prepare(

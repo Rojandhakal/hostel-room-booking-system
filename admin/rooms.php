@@ -4,7 +4,6 @@ include '../includes/admin_header.php';
 $error = "";
 $edit = null;
 
-// Handle Add/Edit Room
 if(isset($_POST['save'])){
     $room_number = trim($_POST['room_number']);
     $room_type   = $_POST['room_type'];
@@ -14,7 +13,6 @@ if(isset($_POST['save'])){
     if(!$room_number || !$room_type || $capacity < 1 || $price < 1){
         $error = "All fields are required with valid values!";
     } else {
-        // Check duplicate room_number
         if(!empty($_POST['id'])){
             $stmt = $pdo->prepare("SELECT id FROM rooms WHERE room_number=? AND id != ?");
             $stmt->execute([$room_number, $_POST['id']]);
@@ -38,23 +36,17 @@ if(isset($_POST['save'])){
         }
     }
 }
-
-// Handle delete
 if(isset($_GET['delete'])){
     $stmt = $pdo->prepare("DELETE FROM rooms WHERE id=?");
     $stmt->execute([$_GET['delete']]);
     header("Location: rooms.php");
     exit;
 }
-
-// Handle edit
 if(isset($_GET['edit'])){
     $stmt = $pdo->prepare("SELECT * FROM rooms WHERE id=?");
     $stmt->execute([$_GET['edit']]);
     $edit = $stmt->fetch();
 }
-
-// Fetch all rooms
 $rooms = $pdo->query("SELECT * FROM rooms ORDER BY room_number")->fetchAll();
 ?>
 

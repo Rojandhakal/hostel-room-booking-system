@@ -11,11 +11,7 @@ include '../includes/client_header.php';
 $error = "";
 
 $user_id = $_SESSION['user_id'];
-
-// Fetch all rooms (room_number => room_type)
 $rooms = $pdo->query("SELECT room_number, room_type FROM rooms")->fetchAll(PDO::FETCH_KEY_PAIR);
-
-// Handle Add Booking
 if (isset($_POST['save'])) {
 
     $name        = htmlspecialchars(trim($_POST['name']));
@@ -23,8 +19,6 @@ if (isset($_POST['save'])) {
     $room_number = $_POST['room_number'];
     $check_in    = $_POST['check_in'];
     $check_out   = $_POST['check_out'];
-
-    // Validation
     if (empty($name) || empty($phone) || empty($room_number) || empty($check_in) || empty($check_out)) {
         $error = "All fields are required!";
     } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
@@ -32,7 +26,6 @@ if (isset($_POST['save'])) {
     } elseif ($check_out <= $check_in) {
         $error = "Check-out date must be after check-in!";
     } else {
-        // Check overlapping booking
         $stmt = $pdo->prepare(
             "SELECT COUNT(*) FROM bookings 
              WHERE room_number=? AND check_in <= ? AND check_out >= ?"
@@ -42,7 +35,6 @@ if (isset($_POST['save'])) {
         if ($stmt->fetchColumn() > 0) {
             $error = "This room is already booked for the selected dates!";
         } else {
-            // Add booking
             $stmt = $pdo->prepare(
                 "INSERT INTO bookings (user_id, name, phone, room_number, check_in, check_out) 
                  VALUES (?,?,?,?,?,?)"
@@ -53,19 +45,15 @@ if (isset($_POST['save'])) {
         }
     }
 }
-
-// Fetch user's bookings only
 $stmt = $pdo->prepare("SELECT * FROM bookings WHERE user_id=? ORDER BY check_in DESC");
 $stmt->execute([$user_id]);
 $bookings = $stmt->fetchAll();
 
-// Determine available rooms based on selected dates
 $selected_check_in  = $_POST['check_in'] ?? '';
 $selected_check_out = $_POST['check_out'] ?? '';
-$available_rooms = $rooms; // default: all rooms
+$available_rooms = $rooms; 
 
 if ($selected_check_in && $selected_check_out) {
-    // Find booked rooms overlapping with selected dates
     $stmt = $pdo->prepare(
         "SELECT room_number FROM bookings 
          WHERE check_in <= ? AND check_out >= ?"
@@ -73,7 +61,6 @@ if ($selected_check_in && $selected_check_out) {
     $stmt->execute([$selected_check_out, $selected_check_in]);
     $booked_rooms = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    // Remove booked rooms
     foreach ($booked_rooms as $broom) {
         unset($available_rooms[$broom]);
     }
